@@ -1,6 +1,6 @@
 [
-  { "time": "23:00", "name": "uyku", "emoji": "😴" },
-  { "time": "08:30", "name": "spor", "emoji": "💪" },
-  { "time": "12:30", "name": "öğle yemeği", "emoji": "🍜" },
-  { "time": "20:45", "name": "su iç", "emoji": "💧" }
+  { "time": "23:00", "name": "sleep", "emoji": "😴" },
+  { "time": "08:30", "name": "workout", "emoji": "💪" },
+  { "time": "12:30", "name": "lunch", "emoji": "🍜" },
+  { "time": "20:45", "name": "drink water", "emoji": "💧" }
 ]
