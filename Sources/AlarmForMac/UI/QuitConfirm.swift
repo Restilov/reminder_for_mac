@@ -15,13 +15,13 @@ struct QuitConfirmView: View {
         VStack(spacing: 16) {
             Text("🥺")
                 .font(.system(size: 44))
-            Text("Uygulamadan çıkarsan\nalarmların çalmaz!")
+            Text("If you quit the app,\nyour alarms won't go off!")
                 .font(.system(size: 15, weight: .semibold, design: .rounded))
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.white)
             HStack(spacing: 12) {
                 Button(action: onCancel) {
-                    Text("Vazgeç")
+                    Text("Cancel")
                         .font(.system(size: 13, weight: .semibold, design: .rounded))
                         .padding(.horizontal, 18)
                         .padding(.vertical, 8)
@@ -32,7 +32,7 @@ struct QuitConfirmView: View {
                 .keyboardShortcut(.cancelAction)
 
                 Button(action: onQuit) {
-                    Text("Yine de Çık")
+                    Text("Quit Anyway")
                         .font(.system(size: 13, weight: .semibold, design: .rounded))
                         .padding(.horizontal, 18)
                         .padding(.vertical, 8)

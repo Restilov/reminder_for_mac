@@ -23,7 +23,7 @@ struct AlarmPopupView: View {
                     .font(.system(size: 22, weight: .bold, design: .rounded))
                     .foregroundStyle(.white)
                     .lineLimit(1)
-                Text("\(alarm.time)  ·  Alarm zamanı!")
+                Text("\(alarm.time)  ·  Alarm time!")
                     .font(.system(size: 13, weight: .medium, design: .rounded))
                     .foregroundStyle(.white.opacity(0.85))
             }

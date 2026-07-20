@@ -9,7 +9,7 @@ struct MenuBarView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text("⏰ Alarmlarım")
+            Text("⏰ My Alarms")
                 .font(.system(size: 14, weight: .bold, design: .rounded))
                 .padding(.horizontal, 14)
                 .padding(.vertical, 10)
@@ -17,7 +17,7 @@ struct MenuBarView: View {
             Divider()
 
             if store.alarms.isEmpty {
-                Text("Henüz alarm yok 💤\nAşağıdan ilk alarmını ekle!")
+                Text("No alarms yet 💤\nAdd your first one below!")
                     .font(.system(size: 12, design: .rounded))
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
@@ -45,16 +45,16 @@ struct MenuBarView: View {
             Divider()
 
             HStack {
-                Button("Pencereyi Aç") {
+                Button("Open Window") {
                     openWindow(id: "main")
                     NSApp.activate(ignoringOtherApps: true)
                 }
-                Button("Ayarlar") {
+                Button("Settings") {
                     openSettings()
                     NSApp.activate(ignoringOtherApps: true)
                 }
                 Spacer()
-                Button("Çıkış") {
+                Button("Quit") {
                     QuitConfirm.requestQuit(settingsStore: settingsStore)
                 }
             }
@@ -103,7 +103,7 @@ struct AlarmRow: View {
                     .foregroundStyle(.secondary)
             }
             .buttonStyle(.plain)
-            .help("Alarmı sil")
+            .help("Delete alarm")
         }
         .padding(.horizontal, compact ? 6 : 10)
         .padding(.vertical, compact ? 4 : 8)

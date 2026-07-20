@@ -14,9 +14,9 @@ struct MainWindowView: View {
                 VStack(spacing: 10) {
                     Text("💤")
                         .font(.system(size: 52))
-                    Text("Henüz alarm yok")
+                    Text("No alarms yet")
                         .font(.system(size: 17, weight: .semibold, design: .rounded))
-                    Text("Aşağıdaki formdan ekle ya da JSON dosyasından içe aktar.")
+                    Text("Add one using the form below, or import from a JSON file.")
                         .font(.system(size: 13, design: .rounded))
                         .foregroundStyle(.secondary)
                 }
@@ -43,16 +43,16 @@ struct MainWindowView: View {
                 Button {
                     importJSON()
                 } label: {
-                    Label("JSON İçe Aktar", systemImage: "square.and.arrow.down")
+                    Label("Import JSON", systemImage: "square.and.arrow.down")
                 }
-                .help("JSON dosyasından alarm içe aktar")
+                .help("Import alarms from a JSON file")
             }
         }
-        .alert("İçe Aktarma", isPresented: Binding(
+        .alert("Import", isPresented: Binding(
             get: { importMessage != nil },
             set: { if !$0 { importMessage = nil } }
         )) {
-            Button("Tamam", role: .cancel) {}
+            Button("OK", role: .cancel) {}
         } message: {
             Text(importMessage ?? "")
         }
@@ -62,16 +62,16 @@ struct MainWindowView: View {
         let panel = NSOpenPanel()
         panel.allowedContentTypes = [.json]
         panel.allowsMultipleSelection = false
-        panel.message = "Alarm listesi içeren bir JSON dosyası seç"
+        panel.message = "Select a JSON file containing an alarm list"
         guard panel.runModal() == .OK, let url = panel.url else { return }
 
         let result = store.importJSON(from: url)
         if result.added == 0 && result.skipped == 0 {
-            importMessage = "Dosya okunamadı ya da geçerli alarm bulunamadı. Beklenen biçim: [{\"time\":\"23:00\",\"name\":\"uyku\"}]"
+            importMessage = "Couldn't read the file or no valid alarms found. Expected format: [{\"time\":\"23:00\",\"name\":\"sleep\"}]"
         } else {
-            var message = "\(result.added) alarm içe aktarıldı. 🎉"
+            var message = "\(result.added) alarms imported. 🎉"
             if result.skipped > 0 {
-                message += "\n\(result.skipped) kayıt geçersiz saat nedeniyle atlandı."
+                message += "\n\(result.skipped) entries were skipped due to an invalid time."
             }
             importMessage = message
         }

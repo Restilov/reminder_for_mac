@@ -53,7 +53,7 @@ struct AddAlarmForm: View {
                     .frame(width: 34)
                     .focused($fieldFocus, equals: .minute)
                     .onSubmit(add)
-                TextField(compact ? "isim (örn: uyku)" : "Alarm adı (örn: uyku)", text: $name)
+                TextField(compact ? "name (e.g. sleep)" : "Alarm name (e.g. sleep)", text: $name)
                     .textFieldStyle(.roundedBorder)
                     .focused($fieldFocus, equals: .name)
                     .onSubmit(add)
@@ -65,7 +65,7 @@ struct AddAlarmForm: View {
                 addButton
             }
             HStack(spacing: 8) {
-                Text(compact ? "Renk:" : "Popup rengi:")
+                Text(compact ? "Color:" : "Popup color:")
                     .font(.system(size: compact ? 11 : 12, design: .rounded))
                     .foregroundStyle(.secondary)
                 ThemeSwatchPicker(
@@ -114,10 +114,10 @@ struct AddAlarmForm: View {
                     Circle().stroke(Color.accentColor, lineWidth: 2).padding(-3)
                 }
             }
-            .help("Alarm ekle")
+            .help("Add alarm")
         } else {
             Button(action: add) {
-                Label("Ekle", systemImage: "plus.circle.fill")
+                Label("Add", systemImage: "plus.circle.fill")
             }
             .keyboardShortcut(.defaultAction)
             .overlay {

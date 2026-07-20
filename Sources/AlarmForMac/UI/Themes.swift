@@ -3,11 +3,11 @@ import SwiftUI
 extension PopupTheme {
     var displayName: String {
         switch self {
-        case .peach: return "Şeftali 🍑"
-        case .lavender: return "Lavanta 💜"
-        case .mint: return "Nane 🌿"
-        case .sky: return "Gökyüzü ☁️"
-        case .sunset: return "Gün Batımı 🌅"
+        case .peach: return "Peach 🍑"
+        case .lavender: return "Lavender 💜"
+        case .mint: return "Mint 🌿"
+        case .sky: return "Sky ☁️"
+        case .sunset: return "Sunset 🌅"
         }
     }
 

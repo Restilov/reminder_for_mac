@@ -74,7 +74,7 @@ final class HotkeyManager {
 
     private static func keyName(for event: NSEvent) -> String {
         switch Int(event.keyCode) {
-        case kVK_Space: return "Boşluk"
+        case kVK_Space: return "Space"
         case kVK_Return: return "↩"
         case kVK_Tab: return "⇥"
         case kVK_Delete: return "⌫"

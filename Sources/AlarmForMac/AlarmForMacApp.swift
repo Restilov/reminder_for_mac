@@ -5,12 +5,12 @@ struct AlarmForMacApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
     var body: some Scene {
-        MenuBarExtra("Alarmlarım", systemImage: "alarm.fill") {
+        MenuBarExtra("My Alarms", systemImage: "alarm.fill") {
             MenuBarView()
         }
         .menuBarExtraStyle(.window)
 
-        Window("Alarmlarım", id: "main") {
+        Window("My Alarms", id: "main") {
             MainWindowView()
         }
         .defaultSize(width: 480, height: 520)

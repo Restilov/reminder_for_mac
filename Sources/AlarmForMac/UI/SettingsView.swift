@@ -16,15 +16,15 @@ struct SettingsView: View {
 
     var body: some View {
         Form {
-            Section("Görünüm 🎨") {
-                LabeledContent("Varsayılan renk") {
+            Section("Appearance 🎨") {
+                LabeledContent("Default color") {
                     ThemeSwatchPicker(selection: settings.theme, size: 24)
                 }
-                Text("Her alarma eklerken ayrı renk seçebilirsin; seçici her eklemeden sonra bu renge döner.")
+                Text("You can pick a separate color for each alarm; the picker resets to this color after every add.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 // `settings.animation` collides with the Binding's .animation() method.
-                Picker("Animasyon", selection: Binding(
+                Picker("Animation", selection: Binding(
                     get: { settingsStore.settings.animation },
                     set: { settingsStore.settings.animation = $0 }
                 )) {
@@ -35,51 +35,51 @@ struct SettingsView: View {
             }
 
             Section("Popup 💬") {
-                Picker("Ekranda kalma süresi", selection: settings.popupDuration) {
-                    Text("5 saniye").tag(5.0)
-                    Text("15 saniye").tag(15.0)
-                    Text("30 saniye").tag(30.0)
-                    Text("1 dakika").tag(60.0)
-                    Text("Kapatana kadar").tag(0.0)
+                Picker("On-screen duration", selection: settings.popupDuration) {
+                    Text("5 seconds").tag(5.0)
+                    Text("15 seconds").tag(15.0)
+                    Text("30 seconds").tag(30.0)
+                    Text("1 minute").tag(60.0)
+                    Text("Until dismissed").tag(0.0)
                 }
-                Toggle("Ses çal", isOn: settings.soundEnabled)
+                Toggle("Play sound", isOn: settings.soundEnabled)
                 if settingsStore.settings.soundEnabled {
-                    Picker("Ses", selection: settings.soundName) {
+                    Picker("Sound", selection: settings.soundName) {
                         ForEach(AppSettings.availableSounds, id: \.self) { sound in
                             Text(sound).tag(sound)
                         }
                     }
                 }
-                Button("Popup'ı Dene ✨") {
-                    let test = Alarm(time: currentTimeString(), name: "deneme", emoji: "🎈")
+                Button("Try Popup ✨") {
+                    let test = Alarm(time: currentTimeString(), name: "test", emoji: "🎈")
                     AppServices.shared.presenter.show(alarm: test)
                 }
             }
 
-            Section("Kısayol ⌨️") {
-                LabeledContent("Paneli aç/kapat") {
+            Section("Shortcut ⌨️") {
+                LabeledContent("Toggle panel") {
                     HStack(spacing: 8) {
                         Button(recordingHotkey
-                            ? "Bir tuş kombinasyonuna bas…"
-                            : (settingsStore.settings.hotkeyEnabled ? settingsStore.settings.hotkeyLabel : "Kısayol yok")
+                            ? "Press a key combination…"
+                            : (settingsStore.settings.hotkeyEnabled ? settingsStore.settings.hotkeyLabel : "No shortcut")
                         ) {
                             startRecordingHotkey()
                         }
                         if settingsStore.settings.hotkeyEnabled && !recordingHotkey {
-                            Button("Kaldır") {
+                            Button("Remove") {
                                 settingsStore.settings.hotkeyEnabled = false
                                 AppServices.shared.hotkeys.apply(settingsStore.settings)
                             }
                         }
                     }
                 }
-                Text("Kısayol her yerden çalışır ve menü panelini açıp kapatır. En az bir değiştirici (⌘ ⌥ ⌃) içermeli; kayıt sırasında Esc iptal eder.")
+                Text("The shortcut works from anywhere and toggles the menu panel. It must include at least one modifier (⌘ ⌥ ⌃); press Esc to cancel while recording.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
 
-            Section("Sistem ⚙️") {
-                Toggle("Girişte başlat (7/24 çalışma)", isOn: $launchAtLogin)
+            Section("System ⚙️") {
+                Toggle("Launch at login (24/7 operation)", isOn: $launchAtLogin)
                     .onChange(of: launchAtLogin) { _, newValue in
                         updateLaunchAtLogin(newValue)
                     }
@@ -88,7 +88,7 @@ struct SettingsView: View {
                         .font(.caption)
                         .foregroundStyle(.red)
                 }
-                Toggle("Çıkışta onay sor", isOn: settings.confirmQuit)
+                Toggle("Ask for confirmation on quit", isOn: settings.confirmQuit)
             }
         }
         .formStyle(.grouped)
@@ -133,7 +133,7 @@ struct SettingsView: View {
             launchAtLoginError = nil
         } catch {
             launchAtLogin = SMAppService.mainApp.status == .enabled
-            launchAtLoginError = "Ayarlanamadı: \(error.localizedDescription)\n(Bu özellik uygulama .app olarak çalışırken kullanılabilir.)"
+            launchAtLoginError = "Couldn't set it: \(error.localizedDescription)\n(This feature is available when the app runs as a .app.)"
         }
     }
 
