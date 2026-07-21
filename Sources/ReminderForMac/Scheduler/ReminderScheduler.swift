@@ -1,18 +1,18 @@
 import AppKit
 import Foundation
 
-/// Sets a one-shot Timer for the next active alarm; when it fires, the alarm is
+/// Sets a one-shot Timer for the next active reminder; when it fires, the reminder is
 /// disabled (since it's one-shot) and the timer is re-armed for the next one. Catches
-/// missed alarms when the Mac wakes from sleep or the system clock changes.
-final class AlarmScheduler {
-    private let store: AlarmStore
-    private let onFire: (Alarm) -> Void
+/// missed reminders when the Mac wakes from sleep or the system clock changes.
+final class ReminderScheduler {
+    private let store: ReminderStore
+    private let onFire: (Reminder) -> Void
 
     private var timer: Timer?
     private var scheduledDate: Date?
     private var suspended = false
 
-    init(store: AlarmStore, onFire: @escaping (Alarm) -> Void) {
+    init(store: ReminderStore, onFire: @escaping (Reminder) -> Void) {
         self.store = store
         self.onFire = onFire
     }
@@ -41,7 +41,7 @@ final class AlarmScheduler {
         scheduledDate = nil
 
         let now = Date()
-        let next = store.alarms
+        let next = store.reminders
             .filter { $0.enabled }
             .compactMap { $0.nextFireDate(after: now) }
             .min()
@@ -56,7 +56,7 @@ final class AlarmScheduler {
         self.timer = timer
     }
 
-    /// When the scheduled time arrives (or has passed after sleep), fires all alarms
+    /// When the scheduled time arrives (or has passed after sleep), fires all reminders
     /// for that minute — including ones missed during sleep.
     private func fireDue() {
         guard let scheduled = scheduledDate else {
@@ -67,10 +67,10 @@ final class AlarmScheduler {
         let deadline = Date().addingTimeInterval(2)
 
         suspended = true
-        for alarm in store.alarms where alarm.enabled {
-            if let next = alarm.nextFireDate(after: reference), next <= deadline {
-                onFire(alarm)
-                store.setEnabled(alarm.id, false)
+        for reminder in store.reminders where reminder.enabled {
+            if let next = reminder.nextFireDate(after: reference), next <= deadline {
+                onFire(reminder)
+                store.setEnabled(reminder.id, false)
             }
         }
         suspended = false

@@ -20,7 +20,7 @@ struct SettingsView: View {
                 LabeledContent("Default color") {
                     ThemeSwatchPicker(selection: settings.theme, size: 24)
                 }
-                Text("You can pick a separate color for each alarm; the picker resets to this color after every add.")
+                Text("You can pick a separate color for each reminder; the picker resets to this color after every add.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 // `settings.animation` collides with the Binding's .animation() method.
@@ -51,8 +51,8 @@ struct SettingsView: View {
                     }
                 }
                 Button("Try Popup ✨") {
-                    let test = Alarm(time: currentTimeString(), name: "test", emoji: "🎈")
-                    AppServices.shared.presenter.show(alarm: test)
+                    let test = Reminder(time: currentTimeString(), name: "test", emoji: "🎈")
+                    AppServices.shared.presenter.show(reminder: test)
                 }
             }
 

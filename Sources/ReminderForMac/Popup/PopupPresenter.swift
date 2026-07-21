@@ -1,8 +1,8 @@
 import AppKit
 import SwiftUI
 
-/// Shows animated alarm popups in the bottom-right corner; stacks them if multiple
-/// alarms fire at once. The window is placed directly at its final position, and the
+/// Shows animated reminder popups in the bottom-right corner; stacks them if multiple
+/// reminders fire at once. The window is placed directly at its final position, and the
 /// entrance animation plays in the SwiftUI content (window animation is unreliable).
 final class PopupPresenter {
     private let settingsStore: SettingsStore
@@ -15,7 +15,7 @@ final class PopupPresenter {
         self.settingsStore = settingsStore
     }
 
-    func show(alarm: Alarm) {
+    func show(reminder: Reminder) {
         let settings = settingsStore.settings
 
         let panel = NSPanel(
@@ -33,7 +33,7 @@ final class PopupPresenter {
         panel.hidesOnDeactivate = false
         panel.isReleasedWhenClosed = false
 
-        let view = AlarmPopupView(alarm: alarm, theme: alarm.theme ?? settings.theme, style: settings.animation) { [weak self, weak panel] in
+        let view = ReminderPopupView(reminder: reminder, theme: reminder.theme ?? settings.theme, style: settings.animation) { [weak self, weak panel] in
             guard let self, let panel else { return }
             self.dismiss(panel)
         }

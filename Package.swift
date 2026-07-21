@@ -2,14 +2,14 @@
 import PackageDescription
 
 let package = Package(
-    name: "AlarmForMac",
+    name: "ReminderForMac",
     platforms: [
         .macOS(.v14)
     ],
     targets: [
         .executableTarget(
-            name: "AlarmForMac",
-            path: "Sources/AlarmForMac"
+            name: "ReminderForMac",
+            path: "Sources/ReminderForMac"
         )
     ]
 )

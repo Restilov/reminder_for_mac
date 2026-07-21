@@ -1,7 +1,7 @@
 import SwiftUI
 
-struct AlarmPopupView: View {
-    let alarm: Alarm
+struct ReminderPopupView: View {
+    let reminder: Reminder
     let theme: PopupTheme
     let style: PopupAnimationStyle
     let onClose: () -> Void
@@ -11,7 +11,7 @@ struct AlarmPopupView: View {
 
     var body: some View {
         HStack(spacing: 14) {
-            Text(alarm.emoji)
+            Text(reminder.emoji)
                 .font(.system(size: 40))
                 .frame(width: 64, height: 64)
                 .background(Circle().fill(.white.opacity(0.3)))
@@ -19,11 +19,11 @@ struct AlarmPopupView: View {
                 .animation(.easeInOut(duration: 0.7).repeatForever(autoreverses: true), value: pulsing)
 
             VStack(alignment: .leading, spacing: 4) {
-                Text(alarm.name)
+                Text(reminder.name)
                     .font(.system(size: 22, weight: .bold, design: .rounded))
                     .foregroundStyle(.white)
                     .lineLimit(1)
-                Text("\(alarm.time)  ·  Alarm time!")
+                Text("\(reminder.time)  ·  Reminder time!")
                     .font(.system(size: 13, weight: .medium, design: .rounded))
                     .foregroundStyle(.white.opacity(0.85))
             }

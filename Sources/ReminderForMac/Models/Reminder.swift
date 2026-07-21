@@ -1,12 +1,12 @@
 import Foundation
 
-struct Alarm: Identifiable, Equatable {
+struct Reminder: Identifiable, Equatable {
     var id: UUID = UUID()
     var time: String // "HH:mm"
     var name: String
     var emoji: String = "⏰"
     var enabled: Bool = true
-    /// Per-alarm popup color; if nil, the default from settings is used.
+    /// Per-reminder popup color; if nil, the default from settings is used.
     var theme: PopupTheme?
 
     static func isValidTime(_ raw: String) -> Bool {
@@ -23,7 +23,7 @@ struct Alarm: Identifiable, Equatable {
     }
 
     var hourMinute: (hour: Int, minute: Int)? {
-        guard let normalized = Alarm.normalizedTime(time) else { return nil }
+        guard let normalized = Reminder.normalizedTime(time) else { return nil }
         let parts = normalized.split(separator: ":")
         return (Int(parts[0])!, Int(parts[1])!)
     }
@@ -39,7 +39,7 @@ struct Alarm: Identifiable, Equatable {
     }
 }
 
-extension Alarm: Codable {
+extension Reminder: Codable {
     private enum CodingKeys: String, CodingKey {
         case id, time, name, emoji, enabled, theme
     }
@@ -49,7 +49,7 @@ extension Alarm: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decodeIfPresent(UUID.self, forKey: .id) ?? UUID()
         time = try container.decode(String.self, forKey: .time)
-        name = try container.decodeIfPresent(String.self, forKey: .name) ?? "Alarm"
+        name = try container.decodeIfPresent(String.self, forKey: .name) ?? "Reminder"
         emoji = try container.decodeIfPresent(String.self, forKey: .emoji) ?? "⏰"
         enabled = try container.decodeIfPresent(Bool.self, forKey: .enabled) ?? true
         theme = (try? container.decodeIfPresent(PopupTheme.self, forKey: .theme)) ?? nil

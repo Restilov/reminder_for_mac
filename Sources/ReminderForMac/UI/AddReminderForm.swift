@@ -1,11 +1,11 @@
 import AppKit
 import SwiftUI
 
-/// Shared alarm-adding form for the menu panel and the main window.
+/// Shared reminder-adding form for the menu panel and the main window.
 /// Tab / Shift+Tab moves through the whole form: hour → minute → name → emoji →
 /// add button → colors → (wraps around). When the button or colors are focused,
 /// Enter/Space activates them; typing 2 digits auto-advances to the next field.
-struct AddAlarmForm: View {
+struct AddReminderForm: View {
     var compact: Bool
 
     @ObservedObject private var store = AppServices.shared.store
@@ -53,7 +53,7 @@ struct AddAlarmForm: View {
                     .frame(width: 34)
                     .focused($fieldFocus, equals: .minute)
                     .onSubmit(add)
-                TextField(compact ? "name (e.g. sleep)" : "Alarm name (e.g. sleep)", text: $name)
+                TextField(compact ? "name (e.g. sleep)" : "Reminder name (e.g. sleep)", text: $name)
                     .textFieldStyle(.roundedBorder)
                     .focused($fieldFocus, equals: .name)
                     .onSubmit(add)
@@ -114,7 +114,7 @@ struct AddAlarmForm: View {
                     Circle().stroke(Color.accentColor, lineWidth: 2).padding(-3)
                 }
             }
-            .help("Add alarm")
+            .help("Add reminder")
         } else {
             Button(action: add) {
                 Label("Add", systemImage: "plus.circle.fill")

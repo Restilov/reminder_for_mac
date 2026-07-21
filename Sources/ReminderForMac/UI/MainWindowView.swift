@@ -10,11 +10,11 @@ struct MainWindowView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            if store.alarms.isEmpty {
+            if store.reminders.isEmpty {
                 VStack(spacing: 10) {
                     Text("💤")
                         .font(.system(size: 52))
-                    Text("No alarms yet")
+                    Text("No reminders yet")
                         .font(.system(size: 17, weight: .semibold, design: .rounded))
                     Text("Add one using the form below, or import from a JSON file.")
                         .font(.system(size: 13, design: .rounded))
@@ -24,8 +24,8 @@ struct MainWindowView: View {
             } else {
                 ScrollView {
                     VStack(spacing: 6) {
-                        ForEach(store.alarms) { alarm in
-                            AlarmRow(alarm: alarm)
+                        ForEach(store.reminders) { reminder in
+                            ReminderRow(reminder: reminder)
                         }
                     }
                     .padding(14)
@@ -34,7 +34,7 @@ struct MainWindowView: View {
 
             Divider()
 
-            AddAlarmForm(compact: false)
+            AddReminderForm(compact: false)
                 .padding(12)
         }
         .frame(minWidth: 440, minHeight: 380)
@@ -45,7 +45,7 @@ struct MainWindowView: View {
                 } label: {
                     Label("Import JSON", systemImage: "square.and.arrow.down")
                 }
-                .help("Import alarms from a JSON file")
+                .help("Import reminders from a JSON file")
             }
         }
         .alert("Import", isPresented: Binding(
@@ -62,14 +62,14 @@ struct MainWindowView: View {
         let panel = NSOpenPanel()
         panel.allowedContentTypes = [.json]
         panel.allowsMultipleSelection = false
-        panel.message = "Select a JSON file containing an alarm list"
+        panel.message = "Select a JSON file containing a reminder list"
         guard panel.runModal() == .OK, let url = panel.url else { return }
 
         let result = store.importJSON(from: url)
         if result.added == 0 && result.skipped == 0 {
-            importMessage = "Couldn't read the file or no valid alarms found. Expected format: [{\"time\":\"23:00\",\"name\":\"sleep\"}]"
+            importMessage = "Couldn't read the file or no valid reminders found. Expected format: [{\"time\":\"23:00\",\"name\":\"sleep\"}]"
         } else {
-            var message = "\(result.added) alarms imported. 🎉"
+            var message = "\(result.added) reminders imported. 🎉"
             if result.skipped > 0 {
                 message += "\n\(result.skipped) entries were skipped due to an invalid time."
             }

@@ -15,7 +15,7 @@ struct QuitConfirmView: View {
         VStack(spacing: 16) {
             Text("🥺")
                 .font(.system(size: 44))
-            Text("If you quit the app,\nyour alarms won't go off!")
+            Text("If you quit the app,\nyour reminders won't go off!")
                 .font(.system(size: 15, weight: .semibold, design: .rounded))
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.white)

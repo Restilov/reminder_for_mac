@@ -1,16 +1,16 @@
 import SwiftUI
 
 @main
-struct AlarmForMacApp: App {
+struct ReminderForMacApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
     var body: some Scene {
-        MenuBarExtra("My Alarms", systemImage: "alarm.fill") {
+        MenuBarExtra("My Reminders", systemImage: "alarm.fill") {
             MenuBarView()
         }
         .menuBarExtraStyle(.window)
 
-        Window("My Alarms", id: "main") {
+        Window("My Reminders", id: "main") {
             MainWindowView()
         }
         .defaultSize(width: 480, height: 520)

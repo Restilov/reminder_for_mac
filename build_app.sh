@@ -1,17 +1,17 @@
 #!/bin/bash
-# Builds the AlarmForMac.app bundle (no Xcode required).
+# Builds the ReminderForMac.app bundle (no Xcode required).
 set -euo pipefail
 cd "$(dirname "$0")"
 
 echo "🔨 Building..."
 swift build -c release
 
-APP="AlarmForMac.app"
-BINARY=".build/release/AlarmForMac"
+APP="ReminderForMac.app"
+BINARY=".build/release/ReminderForMac"
 
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
-cp "$BINARY" "$APP/Contents/MacOS/AlarmForMac"
+cp "$BINARY" "$APP/Contents/MacOS/ReminderForMac"
 
 cat > "$APP/Contents/Info.plist" <<'EOF'
 <?xml version="1.0" encoding="UTF-8"?>
@@ -19,13 +19,13 @@ cat > "$APP/Contents/Info.plist" <<'EOF'
 <plist version="1.0">
 <dict>
 	<key>CFBundleExecutable</key>
-	<string>AlarmForMac</string>
+	<string>ReminderForMac</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.resti.alarmformac</string>
+	<string>com.resti.reminderformac</string>
 	<key>CFBundleName</key>
-	<string>AlarmForMac</string>
+	<string>ReminderForMac</string>
 	<key>CFBundleDisplayName</key>
-	<string>Alarm</string>
+	<string>Reminder</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>

@@ -9,15 +9,15 @@ struct MenuBarView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text("⏰ My Alarms")
+            Text("⏰ My Reminders")
                 .font(.system(size: 14, weight: .bold, design: .rounded))
                 .padding(.horizontal, 14)
                 .padding(.vertical, 10)
 
             Divider()
 
-            if store.alarms.isEmpty {
-                Text("No alarms yet 💤\nAdd your first one below!")
+            if store.reminders.isEmpty {
+                Text("No reminders yet 💤\nAdd your first one below!")
                     .font(.system(size: 12, design: .rounded))
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
@@ -26,8 +26,8 @@ struct MenuBarView: View {
             } else {
                 ScrollView {
                     VStack(spacing: 2) {
-                        ForEach(store.alarms) { alarm in
-                            AlarmRow(alarm: alarm, compact: true)
+                        ForEach(store.reminders) { reminder in
+                            ReminderRow(reminder: reminder, compact: true)
                         }
                     }
                     .padding(.horizontal, 8)
@@ -38,7 +38,7 @@ struct MenuBarView: View {
 
             Divider()
 
-            AddAlarmForm(compact: true)
+            AddReminderForm(compact: true)
                 .padding(.horizontal, 12)
                 .padding(.vertical, 10)
 
@@ -66,9 +66,9 @@ struct MenuBarView: View {
     }
 }
 
-/// Alarm row shared between the menu panel and the main window.
-struct AlarmRow: View {
-    let alarm: Alarm
+/// Reminder row shared between the menu panel and the main window.
+struct ReminderRow: View {
+    let reminder: Reminder
     var compact = false
 
     @ObservedObject private var store = AppServices.shared.store
@@ -77,33 +77,33 @@ struct AlarmRow: View {
     var body: some View {
         HStack(spacing: 10) {
             Circle()
-                .fill((alarm.theme ?? settingsStore.settings.theme).gradient)
+                .fill((reminder.theme ?? settingsStore.settings.theme).gradient)
                 .frame(width: compact ? 10 : 14, height: compact ? 10 : 14)
-            Text(alarm.emoji)
+            Text(reminder.emoji)
                 .font(.system(size: compact ? 16 : 22))
-            Text(alarm.time)
+            Text(reminder.time)
                 .font(.system(size: compact ? 14 : 18, weight: .bold, design: .monospaced))
-                .foregroundStyle(alarm.enabled ? .primary : .secondary)
-            Text(alarm.name)
+                .foregroundStyle(reminder.enabled ? .primary : .secondary)
+            Text(reminder.name)
                 .font(.system(size: compact ? 13 : 15, design: .rounded))
-                .foregroundStyle(alarm.enabled ? .primary : .secondary)
+                .foregroundStyle(reminder.enabled ? .primary : .secondary)
                 .lineLimit(1)
             Spacer()
             Toggle("", isOn: Binding(
-                get: { alarm.enabled },
-                set: { store.setEnabled(alarm.id, $0) }
+                get: { reminder.enabled },
+                set: { store.setEnabled(reminder.id, $0) }
             ))
             .labelsHidden()
             .toggleStyle(.switch)
             .controlSize(.mini)
             Button {
-                store.remove(id: alarm.id)
+                store.remove(id: reminder.id)
             } label: {
                 Image(systemName: "trash")
                     .foregroundStyle(.secondary)
             }
             .buttonStyle(.plain)
-            .help("Delete alarm")
+            .help("Delete reminder")
         }
         .padding(.horizontal, compact ? 6 : 10)
         .padding(.vertical, compact ? 4 : 8)
