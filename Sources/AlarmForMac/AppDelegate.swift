@@ -6,7 +6,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         // temporarily shows in the Dock when the main window opens.
         NSApp.setActivationPolicy(.accessory)
 
-        DebugLog.log("app started, screens: \(NSScreen.screens.map(\.frame))")
         AppServices.shared.scheduler.start()
 
         AppServices.shared.hotkeys.onHotkey = { MenuPanelToggler.toggle() }

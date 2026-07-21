@@ -40,7 +40,6 @@ final class PopupPresenter {
         panel.contentView = NSHostingView(rootView: view)
 
         guard let screen = NSScreen.main ?? NSScreen.screens.first else {
-            DebugLog.log("popup: no screen found!")
             return
         }
         let visible = screen.visibleFrame
@@ -53,12 +52,6 @@ final class PopupPresenter {
         panel.setFrameOrigin(origin)
         panel.orderFrontRegardless()
         panels.append(panel)
-
-        DebugLog.log("popup '\(alarm.name)': origin=\(origin) screen=\(screen.frame) visible=\(panel.isVisible) frame=\(panel.frame)")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak panel] in
-            guard let panel else { return }
-            DebugLog.log("popup +1s: visible=\(panel.isVisible) frame=\(panel.frame) alpha=\(panel.alphaValue) onScreen=\(panel.screen != nil)")
-        }
 
         if settings.soundEnabled {
             NSSound(named: NSSound.Name(settings.soundName))?.play()
